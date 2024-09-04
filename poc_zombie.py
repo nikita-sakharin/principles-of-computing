@@ -147,6 +147,7 @@ class Apocalypse(poc_grid.Grid):
         Function that moves zombies towards humans, no diagonal moves
         are allowed
         """
+        full_distance = self._grid_height * self._grid_width
         for zombie_i in range(len(self._zombie_list)):
             zombie = self._zombie_list[zombie_i]
             moves = self.four_neighbors(zombie[0], zombie[1])
@@ -154,7 +155,7 @@ class Apocalypse(poc_grid.Grid):
             min_moves = [zombie]
             for move in moves:
                 distance = human_distance_field[move[0]][move[1]]
-                if distance <= min_distance:
+                if distance <= min_distance and distance < full_distance:
                     if distance < min_distance:
                         del min_moves[:]
                     min_distance = distance
