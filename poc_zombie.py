@@ -131,8 +131,8 @@ class Apocalypse(poc_grid.Grid):
         for human_i in range(len(self._human_list)):
             human = self._human_list[human_i]
             moves = self.eight_neighbors(human[0], human[1])
-            max_distance = 0
-            max_moves = []
+            max_distance = zombie_distance_field[human[0]][human[1]]
+            max_moves = [human]
             for move in moves:
                 distance = zombie_distance_field[move[0]][move[1]]
                 if distance >= max_distance and distance < full_distance:
@@ -150,8 +150,8 @@ class Apocalypse(poc_grid.Grid):
         for zombie_i in range(len(self._zombie_list)):
             zombie = self._zombie_list[zombie_i]
             moves = self.four_neighbors(zombie[0], zombie[1])
-            min_distance = self._grid_height * self._grid_width
-            min_moves = []
+            min_distance = human_distance_field[zombie[0]][zombie[1]]
+            min_moves = [zombie]
             for move in moves:
                 distance = human_distance_field[move[0]][move[1]]
                 if distance <= min_distance:
