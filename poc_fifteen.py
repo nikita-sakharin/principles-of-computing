@@ -9,7 +9,7 @@ class Puzzle:
     """
     Class representation for the Fifteen puzzle
     """
-    def __init__(self, puzzle_height, puzzle_width, initial_grid = None):
+    def __init__(self, puzzle_height, puzzle_width, initial_grid=None):
         """
         Initialize puzzle with default height and width
         Returns a Puzzle object

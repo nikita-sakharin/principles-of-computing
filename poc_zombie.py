@@ -21,8 +21,8 @@ class Apocalypse(poc_grid.Grid):
     Class for simulating zombie pursuit of human on grid with
     obstacles
     """
-    def __init__(self, grid_height, grid_width, obstacle_list = None,
-                 zombie_list = None, human_list = None):
+    def __init__(self, grid_height, grid_width, obstacle_list=None,
+                 zombie_list=None, human_list=None):
         """
         Create a simulation of given size with given obstacles,
         humans, and zombies

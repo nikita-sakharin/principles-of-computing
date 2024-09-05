@@ -114,7 +114,7 @@ def load_words(filename):
 
     Returns a list of strings.
     """
-    with open(filename, encoding='UTF-8') as file:
+    with open(filename, 'rt', encoding='UTF-8') as file:
         return file.read().splitlines()
 
 def run():
