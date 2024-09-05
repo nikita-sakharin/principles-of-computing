@@ -1,3 +1,6 @@
+"""
+Monte Carlo Tic-Tac-Toe Player
+"""
 import random
 import poc_ttt_gui
 import poc_ttt_provided as provided
@@ -5,9 +8,6 @@ import poc_ttt_provided as provided
 NTRIALS = 1000
 SCORE_CURRENT = 1.0
 SCORE_OTHER = 1.0
-
-# provided.play_game(mc_move, NTRIALS, False)
-# poc_ttt_gui.run_gui(3, provided.PLAYERX, mc_move, NTRIALS, False)
 
 def mc_trial(board, player):
     empty_squares = board.get_empty_squares()
@@ -61,3 +61,6 @@ def mc_move(board, player, trials):
         mc_trial(clone, player)
         mc_update_scores(scores, clone, player)
     return get_best_move(board, scores)
+
+# provided.play_game(mc_move, NTRIALS, False)
+# poc_ttt_gui.run_gui(3, provided.PLAYERX, mc_move, NTRIALS, False)
