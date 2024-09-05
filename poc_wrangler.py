@@ -1,7 +1,6 @@
 """
 Student code for Word Wrangler game
 """
-
 import urllib2
 import codeskulptor
 import poc_wrangler_provided as provided
@@ -115,7 +114,8 @@ def load_words(filename):
 
     Returns a list of strings.
     """
-    return []
+    with open(filename, encoding='UTF-8') as file:
+        return file.read().splitlines()
 
 def run():
     """
@@ -127,5 +127,4 @@ def run():
                                      gen_all_strings)
     provided.run_game(wrangler)
 
-# Uncomment when you are ready to try the game
 run()
