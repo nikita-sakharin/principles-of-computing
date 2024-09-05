@@ -7,7 +7,6 @@ import poc_wrangler_provided as provided
 
 WORDFILE = "assets_scrabble_words3.txt"
 
-
 # Functions to manipulate ordered word lists
 
 def remove_duplicates(list1):
@@ -114,8 +113,9 @@ def load_words(filename):
 
     Returns a list of strings.
     """
-    with open(filename, 'rt') as input_file:
-        return input_file.read().splitlines()
+    url = codeskulptor.file2url(filename)
+    net_file = urllib2.urlopen(url)
+    return net_file.read().splitlines()
 
 def run():
     """
@@ -127,4 +127,4 @@ def run():
                                      gen_all_strings)
     provided.run_game(wrangler)
 
-# run()
+run()
