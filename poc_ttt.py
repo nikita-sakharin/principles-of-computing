@@ -10,6 +10,9 @@ SCORE_CURRENT = 1.0
 SCORE_OTHER = 1.0
 
 def mc_trial(board, player):
+    """
+    This function takes a current board and the next player to move
+    """
     empty_squares = board.get_empty_squares()
     while not board.check_win():
         row, col = random.sample(empty_squares, 1)[0]
@@ -18,6 +21,11 @@ def mc_trial(board, player):
         empty_squares.remove((row, col))
 
 def mc_update_scores(scores, board, player):
+    """
+    This function takes a grid of scores (a list of lists) with the same
+    dimensions as the Tic-Tac-Toe board, a board from a completed game, and
+    which player the machine player is
+    """
     win = board.check_win()
     if win == provided.DRAW:
         return
@@ -39,8 +47,13 @@ def mc_update_scores(scores, board, player):
                     scores[row][col] += SCORE_OTHER
 
 def get_best_move(board, scores):
+    """
+    This function takes a current board and a grid of scores. The function
+    should find all of the empty squares with the maximum score and randomly
+    return one of them as a (row, column) tuple
+    """
     empty_squares = board.get_empty_squares()
-    if not len(empty_squares):
+    if not empty_squares:
         return
     max_squares = [empty_squares[0]]
     max_score = scores[empty_squares[0][0]][empty_squares[0][1]]
@@ -54,6 +67,10 @@ def get_best_move(board, scores):
     return random.sample(max_squares, 1)[0]
 
 def mc_move(board, player, trials):
+    """
+    This function takes a current board, which player the machine player is, and
+    the number of trials to run
+    """
     dim = board.get_dim()
     scores = [[0] * dim for _ in range(dim)]
     for _ in range(trials):
