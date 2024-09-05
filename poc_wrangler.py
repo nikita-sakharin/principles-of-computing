@@ -114,7 +114,7 @@ def load_words(filename):
 
     Returns a list of strings.
     """
-    with open(filename, 'rt', encoding='UTF-8') as file:
+    with open(filename, 'rt') as file:
         return file.read().splitlines()
 
 def run():
@@ -127,4 +127,4 @@ def run():
                                      gen_all_strings)
     provided.run_game(wrangler)
 
-run()
+# run()
