@@ -5,7 +5,7 @@ import random
 import poc_ttt_gui
 import poc_ttt_provided as provided
 
-NTRIALS = 1000
+NTRIALS = 512
 SCORE_CURRENT = 1.0
 SCORE_OTHER = 1.0
 
