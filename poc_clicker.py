@@ -174,7 +174,7 @@ def strategy_best(cookies, cps, history, time_left, build_info):
         return build_info.get_cps(item) / build_info.get_cost(item)
 
     try:
-        return max(filter(predicate, items), key=key)
+        return max(filter(predicate, build_info.build_items()), key=key)
     except:
         return None
 
