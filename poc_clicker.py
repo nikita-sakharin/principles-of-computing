@@ -175,7 +175,7 @@ def strategy_best(cookies, cps, history, time_left, build_info):
 
     try:
         return max(filter(predicate, build_info.build_items()), key=key)
-    except:
+    except ValueError:
         return None
 
 def run_strategy(strategy_name, time, strategy):
