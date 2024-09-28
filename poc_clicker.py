@@ -167,26 +167,16 @@ def strategy_best(cookies, cps, history, time_left, build_info):
     """
     The best strategy that you are able to implement.
     """
-    items = build_info.build_items()
-    items = filter(lambda item: (cookies + cps * time_left) >=
-        build_info.get_cost(item), items)
-    if not items:
+    def predicate(item):
+        return (cookies + cps * time_left) >= build_info.get_cost(item)
+
+    def key(item):
+        return build_info.get_cps(item) / build_info.get_cost(item)
+
+    try:
+        return max(filter(predicate, items), key=key)
+    except:
         return None
-    best = max(items, key = lambda item:
-        key(cookies, cps, history, time_left, build_info, item))
-    return best
-
-def key(cookies, cps, history, time_left, build_info, item):
-    """
-    key for strategy_best
-    """
-    cost = build_info.get_cost(item)
-    time_until = max(0.0, math.ceil((cost - cookies) / cps))
-
-    cookies += cps * time_until - cost
-    cps += build_info.get_cps(item)
-    time_left -= time_until
-    return cookies + time_left * cps
 
 def run_strategy(strategy_name, time, strategy):
     """
