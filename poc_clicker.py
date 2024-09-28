@@ -155,13 +155,7 @@ def strategy_expensive(cookies, cps, history, time_left, build_info):
     """
     Always buy the most expensive item you can afford in the time left.
     """
-    def expensive(item):
-        """
-        Function shows how expensive the item is.
-        """
-        return build_info.get_cost(item)
-
-    return strategy_template(cookies, cps, history, time_left, build_info, expensive)
+    return strategy_template(cookies, cps, history, time_left, build_info, build_info.get_cost)
 
 def strategy_best(cookies, cps, history, time_left, build_info):
     """
