@@ -1,7 +1,7 @@
 """
 Cookie Clicker Simulator
 """
-import math
+from math import ceil
 
 import simpleplot
 import codeskulptor
@@ -68,7 +68,7 @@ class ClickerState:
         """
         if self._cookies >= cookies:
             return 0.0
-        return math.ceil((cookies - self._cookies) / self._cps)
+        return ceil((cookies - self._cookies) / self._cps)
 
     def wait(self, time):
         """
@@ -143,50 +143,50 @@ def strategy_cheap(cookies, cps, history, time_left, build_info):
     """
     Always buy the cheapest item you can afford in the time left.
     """
-    def can_buy(item):
+    def cheap(item):
         """
-        Check if item can be bought.
+        Function shows how cheap the item is.
         """
-        return (cookies + cps * time_left) >= build_info.get_cost(item)
+        return -build_info.get_cost(item)
 
-    try:
-        return min(filter(can_buy, build_info.build_items()), key=build_info.get_cost)
-    except ValueError:
-        return None
+    return strategy_template(cookies, cps, history, time_left, build_info, cheap)
 
 def strategy_expensive(cookies, cps, history, time_left, build_info):
     """
     Always buy the most expensive item you can afford in the time left.
     """
-    def can_buy(item):
+    def expensive(item):
         """
-        Check if item can be bought.
+        Function shows how expensive the item is.
         """
-        return (cookies + cps * time_left) >= build_info.get_cost(item)
+        return build_info.get_cost(item)
 
-    try:
-        return max(filter(can_buy, build_info.build_items()), key=build_info.get_cost)
-    except ValueError:
-        return None
+    return strategy_template(cookies, cps, history, time_left, build_info, expensive)
 
 def strategy_best(cookies, cps, history, time_left, build_info):
     """
     The best strategy that you are able to implement.
     """
+    def rentability(item):
+        """
+        Rentability function.
+        """
+        return build_info.get_cps(item) / build_info.get_cost(item)
+
+    return strategy_template(cookies, cps, history, time_left, build_info, rentability)
+
+def strategy_template(cookies, cps, history, time_left, build_info, key):
+    """
+    Template for strategies.
+    """
     def can_buy(item):
         """
         Check if item can be bought.
         """
         return (cookies + cps * time_left) >= build_info.get_cost(item)
 
-    def rentability(item):
-        """
-        profitability
-        """
-        return build_info.get_cps(item) / build_info.get_cost(item)
-
     try:
-        return max(filter(can_buy, build_info.build_items()), key=rentability)
+        return max(filter(can_buy, build_info.build_items()), key=key)
     except ValueError:
         return None
 
