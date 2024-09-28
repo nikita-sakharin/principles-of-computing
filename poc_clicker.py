@@ -143,38 +143,50 @@ def strategy_cheap(cookies, cps, history, time_left, build_info):
     """
     Always buy the cheapest item you can afford in the time left.
     """
-    items = build_info.build_items()
-    items = filter(lambda item: (cookies + cps * time_left) >=
-        build_info.get_cost(item), items)
-    if not items:
+    def can_buy(item):
+        """
+        Check if item can be bought.
+        """
+        return (cookies + cps * time_left) >= build_info.get_cost(item)
+
+    try:
+        return min(filter(can_buy, build_info.build_items()), key=build_info.get_cost)
+    except ValueError:
         return None
-    cheap = min(items, key = lambda item: build_info.get_cost(item))
-    return cheap
 
 def strategy_expensive(cookies, cps, history, time_left, build_info):
     """
     Always buy the most expensive item you can afford in the time left.
     """
-    items = build_info.build_items()
-    items = filter(lambda item: (cookies + cps * time_left) >=
-        build_info.get_cost(item), items)
-    if not items:
+    def can_buy(item):
+        """
+        Check if item can be bought.
+        """
+        return (cookies + cps * time_left) >= build_info.get_cost(item)
+
+    try:
+        return max(filter(can_buy, build_info.build_items()), key=build_info.get_cost)
+    except ValueError:
         return None
-    expensive = max(items, key = lambda item: build_info.get_cost(item))
-    return expensive
 
 def strategy_best(cookies, cps, history, time_left, build_info):
     """
     The best strategy that you are able to implement.
     """
-    def predicate(item):
+    def can_buy(item):
+        """
+        Check if item can be bought.
+        """
         return (cookies + cps * time_left) >= build_info.get_cost(item)
 
-    def key(item):
+    def rentability(item):
+        """
+        profitability
+        """
         return build_info.get_cps(item) / build_info.get_cost(item)
 
     try:
-        return max(filter(predicate, build_info.build_items()), key=key)
+        return max(filter(can_buy, build_info.build_items()), key=rentability)
     except ValueError:
         return None
 
